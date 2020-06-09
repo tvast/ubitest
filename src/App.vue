@@ -7,7 +7,7 @@
     <router-view />
   </div>
 </template>
-
+<style src="vue-material/dist/vue-material.css"></style>
 <style lang="scss">
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
