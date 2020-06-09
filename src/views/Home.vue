@@ -1,60 +1,45 @@
 <template>
-  <date-range-picker v-model="dateRange">
-    <!--    header slot-->
-    <div slot="header" slot-scope="header" class="slot">
-      <h3>Calendar header</h3>
-      <span v-if="header.in_selection"> - in selection</span>
-    </div>
-    <!--    input slot (new slot syntax)-->
-    <template #input="picker" style="min-width: 350px;">
-      {{ picker.startDate | date }} - {{ picker.endDate | date }}
-    </template>
-    <!--    ranges (new slot syntax) -->
-    <template #ranges="ranges">
-      <div class="ranges">
-        <ul>
-          <li
-            v-for="(range, name) in ranges.ranges"
-            :key="name"
-            @click="ranges.clickRange(range)"
-          >
-            <b>{{ name }}</b>
-            <small class="text-muted"
-              >{{ range[0].toDateString() }} -
-              {{ range[1].toDateString() }}</small
-            >
-          </li>
-        </ul>
-      </div>
-    </template>
-    <!--    footer slot-->
-    <div slot="footer" slot-scope="data" class="slot">
-      <div><b class="text-black">Calendar footer</b> {{ data.rangeText }}</div>
-      <div style="margin-left: auto">
-        <a
-          @click="data.clickApply"
-          v-if="!data.in_selection"
-          class="btn btn-primary btn-sm"
-          >Choose current</a
-        >
-      </div>
-    </div>
-  </date-range-picker>
+  <vc-date-picker
+    mode="multiple"
+    v-model="dates"
+    :value="null"
+    color="red"
+    is-dark
+    is-inline
+  />
 </template>
 
 <script>
-import DateRangePicker from "vue2-daterange-picker";
-import "vue2-daterange-picker/dist/vue2-daterange-picker.css";
+import Vue from "vue";
 
+// import DateRangePicker from "vue2-daterange-picker";
+// import "vue2-daterange-picker/dist/vue2-daterange-picker.css";
+import Calendar from "v-calendar/lib/components/calendar.umd";
+import DatePicker from "v-calendar/lib/components/date-picker.umd";
+
+// Register components in your 'main.js'
+Vue.component("calendar", Calendar);
+Vue.component("date-picker", DatePicker);
+
+// Or just use in separate component
 export default {
+  components: {
+    // Calendar,
+    // DatePicker
+  },
   name: "SlotsDemo",
-  components: { DateRangePicker },
+  // components: { VCalendar },
   data() {
-    let startDate = new Date();
-    let endDate = new Date();
-    endDate.setDate(endDate.getDate() + 6);
+    // let startDate = new Date();
+    // let endDate = new Date();
+    // endDate.setDate(endDate.getDate() + 6);
     return {
-      dateRange: { startDate, endDate }
+      // dateRange: { startDate, endDate }
+      dates: {
+        start: null, // From the beginning of time
+        end: new Date(), // Jan 1st, 2019
+        weekdays: [0] // ...on Sundays and Saturdays
+      }
     };
   },
   filters: {
